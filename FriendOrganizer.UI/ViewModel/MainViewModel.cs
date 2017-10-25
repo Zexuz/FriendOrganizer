@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
 
@@ -16,8 +17,8 @@ namespace FriendOrganizer.UI.ViewModel
             get => _selectedFriend;
             set
             {
-                OnPropertyChanged();
                 _selectedFriend = value;
+                OnPropertyChanged();
             }
         }
 
