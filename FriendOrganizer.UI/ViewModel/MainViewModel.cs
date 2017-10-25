@@ -4,7 +4,7 @@ using FriendOrganizer.UI.Data;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class MainViewMOdel:ViewModelBase
+    public class MainViewModel:ViewModelBase
     {
         private readonly IFriendDataService _friendDataService;
         private Friend _selecetedFriend;
@@ -21,7 +21,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public MainViewMOdel(IFriendDataService friendDataService)
+        public MainViewModel(IFriendDataService friendDataService)
         {
             _friendDataService = friendDataService;
             Friends = new ObservableCollection<Friend>();
