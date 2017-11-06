@@ -5,7 +5,7 @@ using FriendOrganizer.UI.Data;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class MainViewModel:ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         private readonly IFriendDataService _friendDataService;
         private Friend _selectedFriend;
@@ -36,8 +36,5 @@ namespace FriendOrganizer.UI.ViewModel
                 Friends.Add(friend);
             }
         }
-
-
-     
     }
 }
