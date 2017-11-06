@@ -9,11 +9,11 @@ using FriendOrganizer.Model;
 
 namespace FriendOrganizer.UI.Data
 {
-    public class LookupDataService : ILookupDataService
+    public class FriendLookupDataService : IFriendLookupDataService
     {
         private readonly Func<FriendOrganizerDbContext> _contextCreator;
 
-        public LookupDataService(Func<FriendOrganizerDbContext> contextCreator)
+        public FriendLookupDataService(Func<FriendOrganizerDbContext> contextCreator)
         {
             _contextCreator = contextCreator;
         }
