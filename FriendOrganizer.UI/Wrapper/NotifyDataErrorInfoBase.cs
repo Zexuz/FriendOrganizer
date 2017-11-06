@@ -21,9 +21,10 @@ namespace FriendOrganizer.UI.Wrapper
                 : null;
         }
 
-        protected virtual void OnErrorChanged(string propertyName)
+        protected virtual void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            base.OnPropertyChanged(nameof(HasErrors));
         }
 
         protected void AddError(string propertyName, string error)
@@ -35,7 +36,7 @@ namespace FriendOrganizer.UI.Wrapper
             if (!_errorsByProprtyName[propertyName].Contains(error))
             {
                 _errorsByProprtyName[propertyName].Add(error);
-                OnPropertyChanged();
+                OnErrorsChanged(propertyName);
             }
         }
 
@@ -44,7 +45,7 @@ namespace FriendOrganizer.UI.Wrapper
             if (_errorsByProprtyName.ContainsKey(propertyName))
             {
                 _errorsByProprtyName.Remove(propertyName);
-                OnPropertyChanged();
+                OnErrorsChanged(propertyName);
             }
         }
 
