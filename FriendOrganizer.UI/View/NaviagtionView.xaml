@@ -7,6 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <ListView ItemsSource="{Binding Friends}"
+                  SelectedItem="{Binding SelectedFriend}"
                   DisplayMemberPath="DisplayMember" />
     </Grid>
 </UserControl>

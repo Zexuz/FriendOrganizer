@@ -3,6 +3,7 @@ using Autofac;
 using FriendOragnizer.DataAccess;
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.ViewModel;
+using Prism.Events;
 using IContainer = Autofac.IContainer;
 
 namespace FriendOrganizer.UI.StartUp
@@ -15,6 +16,7 @@ namespace FriendOrganizer.UI.StartUp
             
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
+            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
 
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
             builder.RegisterType<FriendLookupDataService>().AsImplementedInterfaces();
