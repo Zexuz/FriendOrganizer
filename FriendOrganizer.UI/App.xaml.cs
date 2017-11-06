@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Threading;
 using Autofac;
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.StartUp;
@@ -16,6 +17,12 @@ namespace FriendOrganizer.UI
             
             var mainWindow = container.Resolve<MainWindow>();
             mainWindow.Show();
+        }
+
+        private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+
+            e.Handled = true;
         }
     }
 }

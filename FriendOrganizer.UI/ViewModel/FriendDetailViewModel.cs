@@ -5,20 +5,21 @@ using System.Windows.Input;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Event;
+using FriendOrganizer.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class FriendDetailViewModel:ViewModelBase, IFriendDetailViewModel
+    public class FriendDetailViewModel : ViewModelBase, IFriendDetailViewModel
     {
         private readonly IFriendDataService _dataService;
         private readonly IEventAggregator _eventAggregator;
-        private Friend _friend;
+        private FriendWrapper _friend;
 
         public ICommand SaveCommand { get; }
-        
-        public Friend Friend
+
+        public FriendWrapper Friend
         {
             get => _friend;
             private set
@@ -27,29 +28,36 @@ namespace FriendOrganizer.UI.ViewModel
                 OnPropertyChanged();
             }
         }
-        
-        
+
+
         public FriendDetailViewModel(IFriendDataService dataService, IEventAggregator eventAggregator)
         {
             _dataService = dataService;
             _eventAggregator = eventAggregator;
 
-            SaveCommand = new DelegateCommand(OnSaveExecute,OnSaveCanExecute);
-            
+            SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+
             _eventAggregator.GetEvent<OpenFriendDetialViewEvent>()
                 .Subscribe(OpOpenFriendDetailView);
         }
+        
+        public async Task LoadAsync(int friendId)
+        {
+            var friend = await _dataService.GetByIdAsync(friendId);
+            Friend = new FriendWrapper(friend);
+        }
+
 
         private async void OnSaveExecute()
         {
-            await _dataService.SaveAsync(Friend);
+            await _dataService.SaveAsync(Friend.Model);
             _eventAggregator.GetEvent<AfterFriendSavedEvent>().Publish(
                 new AfterFriendSavedEventArgs
                 {
                     DisplayMember = $"{Friend.FirstName} {Friend.LastName}",
                     Id = Friend.Id
                 }
-                );
+            );
         }
 
         private bool OnSaveCanExecute()
@@ -62,9 +70,5 @@ namespace FriendOrganizer.UI.ViewModel
             await LoadAsync(friendId);
         }
 
-        public async Task LoadAsync(int friendId)
-        {
-            Friend = await _dataService.GetByIdAsync(friendId);
-        }
     }
 }
