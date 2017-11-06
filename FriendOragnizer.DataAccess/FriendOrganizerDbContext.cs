@@ -7,7 +7,7 @@ namespace FriendOragnizer.DataAccess
     public class FriendOrganizerDbContext:DbContext
     {
 
-        public FriendOrganizerDbContext():base("FriendConnectionString")
+        public FriendOrganizerDbContext():base("FriendOrganizerDb")
         {
             
         }

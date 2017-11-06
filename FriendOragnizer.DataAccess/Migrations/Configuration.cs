@@ -1,3 +1,5 @@
+using FriendOrganizer.Model;
+
 namespace FriendOragnizer.DataAccess.Migrations
 {
     using System;
@@ -14,10 +16,13 @@ namespace FriendOragnizer.DataAccess.Migrations
 
         protected override void Seed(FriendOragnizer.DataAccess.FriendOrganizerDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+            context.Friends.AddOrUpdate(
+                f => f.FirstName,
+                new Friend {FirstName = "Kalle", LastName = "Anka"},
+                new Friend {FirstName = "Alexander", LastName = "Anka"},
+                new Friend {FirstName = "Knatte", LastName = "Anka"},
+                new Friend {FirstName = "Kajsa", LastName = "Anka"}
+            );
         }
     }
 }
