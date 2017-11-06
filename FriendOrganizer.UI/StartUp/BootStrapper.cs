@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Autofac;
+using FriendOragnizer.DataAccess;
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.ViewModel;
 using IContainer = Autofac.IContainer;
@@ -14,6 +15,8 @@ namespace FriendOrganizer.UI.StartUp
             
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
+
+            builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
 
             builder.RegisterType<FriendDataService>().As<IFriendDataService>();
 
