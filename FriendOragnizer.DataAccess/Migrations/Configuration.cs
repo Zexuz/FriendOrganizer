@@ -20,6 +20,14 @@ namespace FriendOragnizer.DataAccess.Migrations
                 new Friend {FirstName = "Knatte", LastName = "Anka"},
                 new Friend {FirstName = "Kajsa", LastName = "Anka"}
             );
+            
+            context.ProgramminLanguages.AddOrUpdate(
+                pl => pl.Name,
+                new ProgramminLanguage{Name = "C#"},
+                new ProgramminLanguage{Name = "Dart"},
+                new ProgramminLanguage{Name = "Kotlin"},
+                new ProgramminLanguage{Name = "Js"}
+                );
         }
     }
 }

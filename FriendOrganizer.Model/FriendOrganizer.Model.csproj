@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Friend.cs" />
     <Compile Include="LookupItem.cs" />
+    <Compile Include="ProgramminLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
