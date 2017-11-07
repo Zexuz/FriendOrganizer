@@ -29,5 +29,10 @@ namespace FriendOrganizer.UI.Data.Repositries
         {
             return _context.ChangeTracker.HasChanges();
         }
+
+        public void Add(Friend friend)
+        {
+            _context.Friends.Add(friend);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data.Repositries;
 using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.Wrapper;
@@ -50,9 +51,11 @@ namespace FriendOrganizer.UI.ViewModel
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
 
-        public async Task LoadAsync(int friendId)
+        public async Task LoadAsync(int? friendId)
         {
-            var friend = await _friendReposetory.GetByIdAsync(friendId);
+            var friend = friendId.HasValue
+                ?await _friendReposetory.GetByIdAsync(friendId.Value)
+                :CreateNewFriend();
             Friend = new FriendWrapper(friend);
             Friend.PropertyChanged += (sender, e) =>
             {
@@ -66,6 +69,17 @@ namespace FriendOrganizer.UI.ViewModel
                 }
             };
             ((DelegateCommand) SaveCommand).RaiseCanExecuteChanged();
+            if(Friend.Id == 0)
+            {
+                Friend.FirstName = "";
+            }
+        }
+
+        private Friend CreateNewFriend()
+        {
+            var friend = new Friend();
+            _friendReposetory.Add(friend);
+            return friend;
         }
 
 

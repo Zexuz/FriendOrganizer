@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.View.Servicies;
+using Prism.Commands;
 using Prism.Events;
 
 namespace FriendOrganizer.UI.ViewModel
@@ -20,6 +22,8 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
+        public ICommand CreateNewFriendCommand { get; }
+
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
         private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
@@ -37,7 +41,9 @@ namespace FriendOrganizer.UI.ViewModel
             _messageDialogService = messageDialogService;
 
 
-            _eventAggregator.GetEvent<OpenFriendDetialViewEvent>().Subscribe(OpOpenFriendDetailView);
+            _eventAggregator.GetEvent<OpenFriendDetialViewEvent>().Subscribe(OnOpenFriendDetailView);
+
+            CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
 
             NavigationViewModel = navigationViewModel;
         }
@@ -47,18 +53,23 @@ namespace FriendOrganizer.UI.ViewModel
             await NavigationViewModel.LoadAsync();
         }
 
-        private async void OpOpenFriendDetailView(int friendId)
+        private async void OnOpenFriendDetailView(int? friendId)
         {
             if (FriendDetailViewModel != null && FriendDetailViewModel.HasChanges)
             {
                 var res = _messageDialogService.ShowOkCancelDialog("You have made changes. Navigate away?", "Question");
-                if(res == MessageDialogResult.Cancel)
+                if (res == MessageDialogResult.Cancel)
                 {
                     return;
-                }   
+                }
             }
             FriendDetailViewModel = _friendDetailViewModelCreator();
             await FriendDetailViewModel.LoadAsync(friendId);
+        }
+
+        private void OnCreateNewFriendExecute()
+        {
+            OnOpenFriendDetailView(null);
         }
     }
 }
