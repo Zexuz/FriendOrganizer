@@ -72,6 +72,7 @@
     </ApplicationDefinition>
     <Compile Include="Data\Lookups\FriendLookupDataService.cs" />
     <Compile Include="Data\Lookups\IFriendLookupDataService.cs" />
+    <Compile Include="Data\Lookups\IProgramminLanguageLookupDataService.cs" />
     <Compile Include="Data\Repositries\FriendReposetory.cs" />
     <Compile Include="Data\Repositries\IFriendReposetory.cs" />
     <Compile Include="Event\AfterFriendDeletedEvent.cs" />

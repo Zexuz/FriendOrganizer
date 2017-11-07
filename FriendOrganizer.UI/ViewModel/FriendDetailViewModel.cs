@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using FriendOrganizer.Model;
+using FriendOrganizer.UI.Data.Lookups;
 using FriendOrganizer.UI.Data.Repositries;
 using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.View.Servicies;
@@ -15,11 +17,15 @@ namespace FriendOrganizer.UI.ViewModel
         private readonly IFriendReposetory _friendReposetory;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
+        private readonly IProgramminLanguageLookupDataService _programminLanguageLookupDataService;
         private FriendWrapper _friend;
         private bool _hasChanges;
 
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
+        
+        public ObservableCollection<LookupItem> ProgrammingLanguages { get;  }
+
 
         public FriendWrapper Friend
         {
@@ -46,21 +52,39 @@ namespace FriendOrganizer.UI.ViewModel
         }
 
 
-        public FriendDetailViewModel(IFriendReposetory friendReposetory, IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
+        public FriendDetailViewModel
+        (
+            IFriendReposetory friendReposetory,
+            IEventAggregator eventAggregator,
+            IMessageDialogService messageDialogService,
+            IProgramminLanguageLookupDataService programminLanguageLookupDataService
+        )
         {
             _friendReposetory = friendReposetory;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
+            _programminLanguageLookupDataService = programminLanguageLookupDataService;
 
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
+
+            ProgrammingLanguages = new ObservableCollection<LookupItem>();
         }
 
+
         public async Task LoadAsync(int? friendId)
+        {
+            await InitializeFriend(friendId);
+            await LoadProgrammingLangueagesLookupAsync();
+        }
+
+        private async Task InitializeFriend(int? friendId)
         {
             var friend = friendId.HasValue
                 ? await _friendReposetory.GetByIdAsync(friendId.Value)
                 : CreateNewFriend();
+
+
             Friend = new FriendWrapper(friend);
             Friend.PropertyChanged += (sender, e) =>
             {
@@ -80,13 +104,22 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
+        private async Task LoadProgrammingLangueagesLookupAsync()
+        {
+            ProgrammingLanguages.Clear();
+            var lookup = await _programminLanguageLookupDataService.GetProgrammingLanguageLookupAsync();
+            foreach (var lookupItem in lookup)
+            {
+                ProgrammingLanguages.Add(lookupItem);
+            }
+        }
+
         private Friend CreateNewFriend()
         {
             var friend = new Friend();
             _friendReposetory.Add(friend);
             return friend;
         }
-
 
         private async void OnSaveExecute()
         {
