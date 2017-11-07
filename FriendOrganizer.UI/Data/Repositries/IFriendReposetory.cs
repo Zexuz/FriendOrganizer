@@ -9,5 +9,6 @@ namespace FriendOrganizer.UI.Data.Repositries
         Task SaveAsync();
         bool HasChanges();
         void Add(Friend friend);
+        void Remove(Friend friendModel);
     }
 }

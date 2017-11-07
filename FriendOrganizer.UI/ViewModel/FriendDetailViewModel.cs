@@ -3,6 +3,7 @@ using System.Windows.Input;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data.Repositries;
 using FriendOrganizer.UI.Event;
+using FriendOrganizer.UI.View.Servicies;
 using FriendOrganizer.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
@@ -13,10 +14,12 @@ namespace FriendOrganizer.UI.ViewModel
     {
         private readonly IFriendReposetory _friendReposetory;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMessageDialogService _messageDialogService;
         private FriendWrapper _friend;
         private bool _hasChanges;
 
         public ICommand SaveCommand { get; }
+        public ICommand DeleteCommand { get; }
 
         public FriendWrapper Friend
         {
@@ -43,19 +46,21 @@ namespace FriendOrganizer.UI.ViewModel
         }
 
 
-        public FriendDetailViewModel(IFriendReposetory friendReposetory, IEventAggregator eventAggregator)
+        public FriendDetailViewModel(IFriendReposetory friendReposetory, IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
         {
             _friendReposetory = friendReposetory;
             _eventAggregator = eventAggregator;
+            _messageDialogService = messageDialogService;
 
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+            DeleteCommand = new DelegateCommand(OnDeleteExecute);
         }
 
         public async Task LoadAsync(int? friendId)
         {
             var friend = friendId.HasValue
-                ?await _friendReposetory.GetByIdAsync(friendId.Value)
-                :CreateNewFriend();
+                ? await _friendReposetory.GetByIdAsync(friendId.Value)
+                : CreateNewFriend();
             Friend = new FriendWrapper(friend);
             Friend.PropertyChanged += (sender, e) =>
             {
@@ -69,7 +74,7 @@ namespace FriendOrganizer.UI.ViewModel
                 }
             };
             ((DelegateCommand) SaveCommand).RaiseCanExecuteChanged();
-            if(Friend.Id == 0)
+            if (Friend.Id == 0)
             {
                 Friend.FirstName = "";
             }
@@ -99,6 +104,17 @@ namespace FriendOrganizer.UI.ViewModel
         private bool OnSaveCanExecute()
         {
             return Friend != null && !Friend.HasErrors && HasChanges;
+        }
+
+        private async void OnDeleteExecute()
+        {
+            var res = _messageDialogService.ShowOkCancelDialog($"Do you readly want to delete the friend {Friend.FirstName} {Friend.LastName}", "Question");
+            if (res == MessageDialogResult.Ok)
+            {
+                _friendReposetory.Remove(Friend.Model);
+                await _friendReposetory.SaveAsync();
+                _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
+            }
         }
     }
 }

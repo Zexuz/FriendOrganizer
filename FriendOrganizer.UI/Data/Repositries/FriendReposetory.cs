@@ -34,5 +34,10 @@ namespace FriendOrganizer.UI.Data.Repositries
         {
             _context.Friends.Add(friend);
         }
+
+        public void Remove(Friend friend)
+        {
+            _context.Friends.Remove(friend);
+        }
     }
 }
