@@ -2,6 +2,7 @@
 using FriendOragnizer.DataAccess;
 using FriendOrganizer.UI.Data.Lookups;
 using FriendOrganizer.UI.Data.Repositries;
+using FriendOrganizer.UI.View.Servicies;
 using FriendOrganizer.UI.ViewModel;
 using Prism.Events;
 using IContainer = Autofac.IContainer;
@@ -17,6 +18,8 @@ namespace FriendOrganizer.UI.StartUp
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+            
+            builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
 
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
             builder.RegisterType<FriendLookupDataService>().AsImplementedInterfaces();
