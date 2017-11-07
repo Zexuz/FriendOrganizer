@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
-using System.Windows.Documents;
 
 namespace FriendOrganizer.UI.Wrapper
 {

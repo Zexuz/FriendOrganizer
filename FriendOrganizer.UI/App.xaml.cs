@@ -1,9 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Threading;
 using Autofac;
-using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.StartUp;
-using FriendOrganizer.UI.ViewModel;
 
 namespace FriendOrganizer.UI
 {
