@@ -13,7 +13,7 @@ namespace FriendOrganizer.UI.Data.Repositries
         public FriendReposetory(FriendOrganizerDbContext context)
         {
             _context = context;
-        }
+        } 
 
         public async Task<Friend> GetByIdAsync(int friendId)
         {
