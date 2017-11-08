@@ -92,6 +92,7 @@
     </Compile>
     <Compile Include="View\Servicies\IMessageDialogService.cs" />
     <Compile Include="View\Servicies\MessageDialogService.cs" />
+    <Compile Include="Wrapper\FriendPhoneNumberWrapper.cs" />
     <Compile Include="Wrapper\FriendWrapper.cs" />
     <Compile Include="Wrapper\ModelWrapper.cs" />
     <Compile Include="Wrapper\NotifyDataErrorInfoBase.cs" />
