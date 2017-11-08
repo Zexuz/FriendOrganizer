@@ -14,6 +14,7 @@ namespace FriendOragnizer.DataAccess
         public DbSet<Friend> Friends { get; set; }
 
         public DbSet<ProgramminLanguage> ProgramminLanguages{ get; set; }
+        public DbSet<FriendPhoneNumber> FriendPhoneNumbers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

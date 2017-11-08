@@ -1,3 +1,4 @@
+using System.Linq;
 using FriendOrganizer.Model;
 
 namespace FriendOragnizer.DataAccess.Migrations
@@ -20,14 +21,23 @@ namespace FriendOragnizer.DataAccess.Migrations
                 new Friend {FirstName = "Knatte", LastName = "Anka"},
                 new Friend {FirstName = "Kajsa", LastName = "Anka"}
             );
-            
+
             context.ProgramminLanguages.AddOrUpdate(
                 pl => pl.Name,
-                new ProgramminLanguage{Name = "C#"},
-                new ProgramminLanguage{Name = "Dart"},
-                new ProgramminLanguage{Name = "Kotlin"},
-                new ProgramminLanguage{Name = "Js"}
-                );
+                new ProgramminLanguage {Name = "C#"},
+                new ProgramminLanguage {Name = "Dart"},
+                new ProgramminLanguage {Name = "Kotlin"},
+                new ProgramminLanguage {Name = "Js"}
+            );
+
+            context.SaveChanges();
+
+            context.FriendPhoneNumbers.AddOrUpdate(a => a.Number,
+                new FriendPhoneNumber
+                {
+                    Number = "+46722050271",
+                    FriendId = context.Friends.First().Id
+                });
         }
     }
 }
