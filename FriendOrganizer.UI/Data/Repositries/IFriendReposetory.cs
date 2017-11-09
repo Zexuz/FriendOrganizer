@@ -1,15 +1,9 @@
-﻿using System.Threading.Tasks;
-using FriendOrganizer.Model;
+﻿using FriendOrganizer.Model;
 
 namespace FriendOrganizer.UI.Data.Repositries
 {
-    public interface IFriendReposetory
+    public interface IFriendReposetory:IGenericRepository<Friend>
     {
-        Task<Friend> GetByIdAsync(int friendId);
-        Task SaveAsync();
-        bool HasChanges();
-        void Add(Friend friend);
-        void Remove(Friend friendModel);
         void RemovePhoneNumber(FriendPhoneNumber model);
     }
 }
