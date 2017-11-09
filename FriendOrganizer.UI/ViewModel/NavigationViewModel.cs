@@ -50,7 +50,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        private void AfterDetailSaved(AfterSavedEventArgs obj)
+        private void AfterDetailSaved(AfterDetailSavedEventArgs obj)
         {
             switch (obj.ViewModelName)
             {

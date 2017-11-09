@@ -81,6 +81,7 @@
     <Compile Include="Event\AfterDetailSavedEvent.cs" />
     <Compile Include="Event\OpenDetialViewEvent.cs" />
     <Compile Include="StartUp\BootStrapper.cs" />
+    <Compile Include="ViewModel\DetailViewModelBase.cs" />
     <Compile Include="ViewModel\FriendDetailViewModel.cs" />
     <Compile Include="ViewModel\IDetailViewModel.cs" />
     <Compile Include="ViewModel\IFriendDetailViewModel.cs" />
