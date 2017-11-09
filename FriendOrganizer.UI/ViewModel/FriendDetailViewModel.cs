@@ -204,7 +204,11 @@ namespace FriendOrganizer.UI.ViewModel
             {
                 _friendReposetory.Remove(Friend.Model);
                 await _friendReposetory.SaveAsync();
-                _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
+                _eventAggregator.GetEvent<AfterDetailDeletedEvent>().Publish(new AfterDetailDeletedEventArgs
+                {
+                    Id = Friend.Id,
+                    ViewModelName = nameof(FriendDetailViewModel)
+                });
             }
         }
 
