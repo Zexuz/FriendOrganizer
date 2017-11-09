@@ -12,12 +12,12 @@ namespace FriendOrganizer.UI.ViewModel
     {
         public INavigationViewModel NavigationViewModel { get; }
 
-        public IFriendDetailViewModel FriendDetailViewModel
+        public IDetailViewModel DetailViewModel
         {
-            get => _friendDetailViewModel;
+            get => _detailViewModel;
             private set
             {
-                _friendDetailViewModel = value;
+                _detailViewModel = value;
                 OnPropertyChanged();
             }
         }
@@ -27,7 +27,7 @@ namespace FriendOrganizer.UI.ViewModel
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
         private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
-        private IFriendDetailViewModel _friendDetailViewModel;
+        private IDetailViewModel _detailViewModel;
 
         public MainViewModel(
             INavigationViewModel navigationViewModel,
@@ -56,7 +56,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void OnOpenFriendDetailView(int? friendId)
         {
-            if (FriendDetailViewModel != null && FriendDetailViewModel.HasChanges)
+            if (DetailViewModel != null && DetailViewModel.HasChanges)
             {
                 var res = _messageDialogService.ShowOkCancelDialog("You have made changes. Navigate away?", "Question");
                 if (res == MessageDialogResult.Cancel)
@@ -64,13 +64,13 @@ namespace FriendOrganizer.UI.ViewModel
                     return;
                 }
             }
-            FriendDetailViewModel = _friendDetailViewModelCreator();
-            await FriendDetailViewModel.LoadAsync(friendId);
+            DetailViewModel = _friendDetailViewModelCreator();
+            await DetailViewModel.LoadAsync(friendId);
         }
 
         private void AfterFriendDeleted(int friendId)
         {
-            FriendDetailViewModel = null;
+            DetailViewModel = null;
         }
         
         private void OnCreateNewFriendExecute()
