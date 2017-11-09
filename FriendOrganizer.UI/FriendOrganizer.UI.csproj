@@ -76,7 +76,7 @@
     <Compile Include="Data\Repositries\FriendReposetory.cs" />
     <Compile Include="Data\Repositries\IFriendReposetory.cs" />
     <Compile Include="Event\AfterDetailDeletedEvent.cs" />
-    <Compile Include="Event\AfterFriendSavedEvent.cs" />
+    <Compile Include="Event\AfterDetailSavedEvent.cs" />
     <Compile Include="Event\OpenDetialViewEvent.cs" />
     <Compile Include="StartUp\BootStrapper.cs" />
     <Compile Include="ViewModel\FriendDetailViewModel.cs" />

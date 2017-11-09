@@ -22,7 +22,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public ICommand CreateNewFriendCommand { get; }
+        public ICommand CreateNewDetailCommand { get; }
 
         private readonly IEventAggregator _eventAggregator;
         private readonly IMessageDialogService _messageDialogService;
@@ -44,7 +44,7 @@ namespace FriendOrganizer.UI.ViewModel
             _eventAggregator.GetEvent<OpenDetialViewEvent>().Subscribe(OnOpenDetailView);
             _eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
 
-            CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
+            CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetialExecute);
 
             NavigationViewModel = navigationViewModel;
         }
@@ -78,9 +78,12 @@ namespace FriendOrganizer.UI.ViewModel
             DetailViewModel = null;
         }
 
-        private void OnCreateNewFriendExecute()
+        private void OnCreateNewDetialExecute(Type type)
         {
-            OnOpenDetailView(null);
+            OnOpenDetailView(new OpenDetialViewEventArgs
+            {
+                ViewModelName = type.Name
+            });
         }
     }
 }
