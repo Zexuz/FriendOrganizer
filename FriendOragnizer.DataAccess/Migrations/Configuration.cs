@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using FriendOrganizer.Model;
 
@@ -37,6 +39,20 @@ namespace FriendOragnizer.DataAccess.Migrations
                 {
                     Number = "+46722050271",
                     FriendId = context.Friends.First().Id
+                });
+
+            var friendsList = context.Friends.ToList();
+            context.Meetings.AddOrUpdate(m => m.Title,
+                new Meeting
+                {
+                    Title = "Hangout",
+                    DateFrom = new DateTime(2018, 11, 10),
+                    DateTo = new DateTime(2018, 11, 11),
+                    Friends = new List<Friend>
+                    {
+                        friendsList[0],
+                        friendsList[1]
+                    }
                 });
         }
     }
