@@ -77,6 +77,8 @@
     <Compile Include="Data\Repositries\GenericRepository.cs" />
     <Compile Include="Data\Repositries\IFriendReposetory.cs" />
     <Compile Include="Data\Repositries\IGenericRepository.cs" />
+    <Compile Include="Data\Repositries\IMettingRepository.cs" />
+    <Compile Include="Data\Repositries\MettingRepository.cs" />
     <Compile Include="Event\AfterDetailDeletedEvent.cs" />
     <Compile Include="Event\AfterDetailSavedEvent.cs" />
     <Compile Include="Event\OpenDetialViewEvent.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="View\Servicies\MessageDialogService.cs" />
     <Compile Include="Wrapper\FriendPhoneNumberWrapper.cs" />
     <Compile Include="Wrapper\FriendWrapper.cs" />
+    <Compile Include="Wrapper\MeetingWrapper.cs" />
     <Compile Include="Wrapper\ModelWrapper.cs" />
     <Compile Include="Wrapper\NotifyDataErrorInfoBase.cs" />
     <Page Include="MainWindow.xaml">
