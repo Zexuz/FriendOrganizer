@@ -200,7 +200,7 @@ namespace FriendOrganizer.UI.ViewModel
                 return;
             }
             
-            var res = MessageDialogService.ShowOkCancelDialog($"Do you readly want to delete the friend {Friend.FirstName} {Friend.LastName}", "Question");
+            var res = await MessageDialogService.ShowOkCancelDialog($"Do you readly want to delete the friend {Friend.FirstName} {Friend.LastName}", "Question");
             if (res == MessageDialogResult.Ok)
             {
                 _friendReposetory.Remove(Friend.Model);
