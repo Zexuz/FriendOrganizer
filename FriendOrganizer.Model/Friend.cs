@@ -23,7 +23,7 @@ namespace FriendOrganizer.Model
         public ICollection<Meeting> Meetings { get; set; }
 
         public int? FavoriteLanguageId { get; set; }
-        public ProgramminLanguage FavoriteProgrammingLangueage { get; set; }
+        public ProgramminLanguage FavoriteLangueage { get; set; }
         public ICollection<FriendPhoneNumber> PhoneNumbers { get; set; }
 
         public Friend()
