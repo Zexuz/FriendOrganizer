@@ -2,7 +2,7 @@
 
 namespace FriendOrganizer.UI.Data.Repositries
 {
-    public interface IMettingRepository:IGenericRepository<Meeting>
+    public interface IMeetingRepository:IGenericRepository<Meeting>
     {
     }
 }

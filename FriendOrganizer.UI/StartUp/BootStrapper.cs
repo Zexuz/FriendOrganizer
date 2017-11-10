@@ -27,7 +27,7 @@ namespace FriendOrganizer.UI.StartUp
             builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
 
             builder.RegisterType<FriendReposetory>().As<IFriendReposetory>();
-            builder.RegisterType<MettingRepository>().As<IMettingRepository>();
+            builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
 
             return builder.Build();
         }
