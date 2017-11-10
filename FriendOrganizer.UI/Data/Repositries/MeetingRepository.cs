@@ -1,6 +1,8 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using FriendOragnizer.DataAccess;
 using FriendOrganizer.Model;
 
@@ -17,6 +19,11 @@ namespace FriendOrganizer.UI.Data.Repositries
             return await Context.Meetings
                 .Include(m => m.Friends)
                 .SingleAsync(m => m.Id == id);
+        }
+        
+        public async Task<List<Friend>> GetAllFriendsAsync()
+        {
+            return await Context.Set<Friend>().ToListAsync();
         }
     }
 }
