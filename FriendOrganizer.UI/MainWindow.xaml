@@ -14,7 +14,7 @@
             <view:FriendDetailView />
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewModel:MeetingDetailViewModel}">
-            <view:MeetingDetailView/>
+            <view:MeetingDetailView />
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -29,21 +29,24 @@
         <Menu Grid.ColumnSpan="2" FontSize="20">
             <MenuItem Header="Create">
                 <MenuItem Header="New Friend" Command="{Binding CreateNewDetailCommand}"
-                          CommandParameter="{x:Type viewModel:FriendDetailViewModel}"/>
+                          CommandParameter="{x:Type viewModel:FriendDetailViewModel}" />
                 <MenuItem Header="New Meeting" Command="{Binding CreateNewDetailCommand}"
-                          CommandParameter="{x:Type viewModel:MeetingDetailViewModel}"/>
+                          CommandParameter="{x:Type viewModel:MeetingDetailViewModel}" />
             </MenuItem>
         </Menu>
         <view:NaviagtionView Grid.Row="1" Grid.Column="0" DataContext="{Binding NavigationViewModel}" />
-        
-        <TabControl Grid.Row="1" Grid.Column="1" 
+
+        <TabControl Grid.Row="1" Grid.Column="1"
                     ItemsSource="{Binding DetailViewModels}"
                     SelectedItem="{Binding SelectedDetailViewModel, Mode=TwoWay}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Title"></TextBlock>
-                        <TextBlock Text="*" Visibility="{Binding HasChanges, Converter={StaticResource booleanToVisibilityConverter}}"></TextBlock>
+                        <TextBlock Text="{Binding Title}" />
+                        <TextBlock Text="*" Visibility="{Binding HasChanges, Converter={StaticResource booleanToVisibilityConverter}}" />
+                        <Button Command="{Binding CloseDetailViewCommand}" 
+                                VerticalContentAlignment="Top" Margin="2"
+                                Content="X" FontSize="20"/>
                     </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>
