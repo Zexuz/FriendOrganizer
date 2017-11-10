@@ -26,7 +26,7 @@ namespace FriendOrganizer.UI.Wrapper
             }
         }
 
-        public DateTime DateTo
+        public DateTime DateTo 
         {
             get => GetValue<DateTime>();
             set
