@@ -22,7 +22,7 @@ namespace FriendOrganizer.UI.StartUp
             builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
 
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
-            builder.RegisterType<FriendLookupDataService>().AsImplementedInterfaces();
+            builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
             builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
             builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
 

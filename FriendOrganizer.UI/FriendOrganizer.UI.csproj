@@ -88,7 +88,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\Lookups\FriendLookupDataService.cs" />
+    <Compile Include="Data\Lookups\ILookupMeetingDataService.cs" />
+    <Compile Include="Data\Lookups\LookupDataService.cs" />
     <Compile Include="Data\Lookups\IFriendLookupDataService.cs" />
     <Compile Include="Data\Lookups\IProgramminLanguageLookupDataService.cs" />
     <Compile Include="Data\Repositries\FriendReposetory.cs" />
