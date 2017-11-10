@@ -10,13 +10,13 @@ using Prism.Events;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class ProgramminLangueageDetailViewModel:DetailViewModelBase
+    public class ProgrammingLangueageDetailViewModel:DetailViewModelBase
     {
         private readonly IProgrammingLangueageRepository _programmingLangueageRepository;
 
         public ObservableCollection<ProgramminLanguageWrapper> ProgrammingLanguages{ get; set; }
         
-        public ProgramminLangueageDetailViewModel(IEventAggregator eventAggregator,
+        public ProgrammingLangueageDetailViewModel(IEventAggregator eventAggregator,
             IProgrammingLangueageRepository programmingLangueageRepository,
             IMessageDialogService messageDialogService) : base(eventAggregator, messageDialogService)
         {
@@ -70,6 +70,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             await _programmingLangueageRepository.SaveAsync();
             HasChanges = _programmingLangueageRepository.HasChanges();
+            RaseCollectionSavedEvent();
         }
     }
 }

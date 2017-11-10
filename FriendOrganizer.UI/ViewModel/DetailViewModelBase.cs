@@ -18,7 +18,7 @@ namespace FriendOrganizer.UI.ViewModel
         public ICommand SaveCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand CloseDetailViewCommand { get; }
-        
+
         public int Id
         {
             get { return _id; }
@@ -55,17 +55,26 @@ namespace FriendOrganizer.UI.ViewModel
             CloseDetailViewCommand = new DelegateCommand(OnCloseDetailViewExecute);
         }
 
+        protected virtual void RaseCollectionSavedEvent()
+        {
+            EventAggregator.GetEvent<AfterCollectionSavedEvent>()
+                .Publish(new AfterCollectionSavedEventArgs
+                {
+                    ViewModelName = this.GetType().Name
+                });
+        }
+
         protected virtual void OnCloseDetailViewExecute()
         {
-            if(HasChanges)
+            if (HasChanges)
             {
                 var res = MessageDialogService.ShowOkCancelDialog("You have made changes, close this item?", "Question");
-                if(res == MessageDialogResult.Cancel)
+                if (res == MessageDialogResult.Cancel)
                 {
                     return;
                 }
             }
-            
+
             EventAggregator.GetEvent<AfterDetailClosedEvent>().Publish(new AfterDetailClosedEventArgs
             {
                 Id = this.Id,
@@ -74,7 +83,7 @@ namespace FriendOrganizer.UI.ViewModel
         }
 
         public abstract Task LoadAsync(int id);
-        
+
         protected abstract void OnDeleteExecute();
 
         protected abstract bool OnSaveCanExecute();
@@ -100,6 +109,5 @@ namespace FriendOrganizer.UI.ViewModel
                 ViewModelName = this.GetType().Name
             });
         }
-
     }
 }

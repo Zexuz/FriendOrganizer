@@ -16,7 +16,7 @@
         <DataTemplate DataType="{x:Type viewModel:MeetingDetailViewModel}">
             <view:MeetingDetailView />
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewModel:ProgramminLangueageDetailViewModel}">
+        <DataTemplate DataType="{x:Type viewModel:ProgrammingLangueageDetailViewModel}">
             <view:ProgrammingLangueageDetailView />
         </DataTemplate>
     </Window.Resources>
@@ -39,7 +39,7 @@
             <MenuItem Header="Edit">
                 <MenuItem Header="Programming Langueages"
                           Command="{Binding OpenSingleDetailViewCommnand}"
-                          CommandParameter="{x:Type viewModel:ProgramminLangueageDetailViewModel}" />
+                          CommandParameter="{x:Type viewModel:ProgrammingLangueageDetailViewModel}" />
             </MenuItem>
         </Menu>
         <view:NaviagtionView Grid.Row="1" Grid.Column="0" DataContext="{Binding NavigationViewModel}" />

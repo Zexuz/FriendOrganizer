@@ -65,10 +65,20 @@ namespace FriendOrganizer.UI.ViewModel
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecure);
 
+            eventAggregator.GetEvent<AfterCollectionSavedEvent>().Subscribe(AfterCollectionSaved);
+
             ProgrammingLanguages = new ObservableCollection<LookupItem>();
             PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
         }
 
+        private async void AfterCollectionSaved(AfterCollectionSavedEventArgs args)
+        {
+            if(args.ViewModelName == nameof(ProgrammingLangueageDetailViewModel))
+            {
+                await LoadProgrammingLangueagesLookupAsync();
+            }
+        }
+        
         public override async Task LoadAsync(int friendId)
         {
             var friend = friendId > 0 
