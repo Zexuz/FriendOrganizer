@@ -19,7 +19,6 @@ namespace FriendOrganizer.UI.ViewModel
     public class FriendDetailViewModel : DetailViewModelBase, IFriendDetailViewModel
     {
         private readonly IFriendReposetory _friendReposetory;
-        private readonly IMessageDialogService _messageDialogService;
         private readonly IProgramminLanguageLookupDataService _programminLanguageLookupDataService;
         private FriendWrapper _friend;
         private FriendPhoneNumberWrapper _selectedPhoneNumber;
@@ -58,10 +57,9 @@ namespace FriendOrganizer.UI.ViewModel
             IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService,
             IProgramminLanguageLookupDataService programminLanguageLookupDataService
-        ):base(eventAggregator)
+        ):base(eventAggregator,messageDialogService)
         {
             _friendReposetory = friendReposetory;
-            _messageDialogService = messageDialogService;
             _programminLanguageLookupDataService = programminLanguageLookupDataService;
 
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
@@ -184,11 +182,11 @@ namespace FriendOrganizer.UI.ViewModel
             
             if(await _friendReposetory.HasMeetingsAsync(Friend.Id))
             {
-                _messageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted bveacuse that perosn is part of atlest one meeting.");
+                MessageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted bveacuse that perosn is part of atlest one meeting.");
                 return;
             }
             
-            var res = _messageDialogService.ShowOkCancelDialog($"Do you readly want to delete the friend {Friend.FirstName} {Friend.LastName}", "Question");
+            var res = MessageDialogService.ShowOkCancelDialog($"Do you readly want to delete the friend {Friend.FirstName} {Friend.LastName}", "Question");
             if (res == MessageDialogResult.Ok)
             {
                 _friendReposetory.Remove(Friend.Model);

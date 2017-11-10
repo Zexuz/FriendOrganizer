@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using FriendOrganizer.UI.Event;
+using FriendOrganizer.UI.View.Servicies;
 using Prism.Commands;
 using Prism.Events;
 
@@ -9,6 +10,7 @@ namespace FriendOrganizer.UI.ViewModel
     public abstract class DetailViewModelBase : ViewModelBase, IDetailViewModel
     {
         protected readonly IEventAggregator EventAggregator;
+        protected readonly IMessageDialogService MessageDialogService;
         private bool _hasChanges;
         private int _id;
         private string _title;
@@ -44,9 +46,10 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public DetailViewModelBase(IEventAggregator eventAggregator)
+        public DetailViewModelBase(IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
         {
             EventAggregator = eventAggregator;
+            MessageDialogService = messageDialogService;
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
             CloseDetailViewCommand = new DelegateCommand(OnCloseDetailViewExecute);
@@ -54,6 +57,15 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected virtual void OnCloseDetailViewExecute()
         {
+            if(HasChanges)
+            {
+                var res = MessageDialogService.ShowOkCancelDialog("You have made changes, close this item?", "Question");
+                if(res == MessageDialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+            
             EventAggregator.GetEvent<AfterDetailClosedEvent>().Publish(new AfterDetailClosedEventArgs
             {
                 Id = this.Id,
