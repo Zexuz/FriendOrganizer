@@ -92,7 +92,7 @@ namespace FriendOrganizer.UI.ViewModel
             var lookupItem = items.SingleOrDefault(l => l.Id == args.Id);
             if (lookupItem == null)
             {
-                Friends.Add(new NavigationItemViewModel(args.Id, args.DisplayMember, _eventAggregator, args.ViewModelName));
+                items.Add(new NavigationItemViewModel(args.Id, args.DisplayMember, _eventAggregator, args.ViewModelName));
             }
             else
             {

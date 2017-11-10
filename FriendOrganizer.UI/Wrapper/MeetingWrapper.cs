@@ -16,13 +16,27 @@ namespace FriendOrganizer.UI.Wrapper
         public DateTime DateFrom
         {
             get => GetValue<DateTime>();
-            set => SetValue(value);
+            set
+            {
+                SetValue(value);
+                if (DateTo < DateFrom)
+                {
+                    DateTo = DateFrom;
+                }
+            }
         }
 
         public DateTime DateTo
         {
             get => GetValue<DateTime>();
-            set => SetValue(value);
+            set
+            {
+                SetValue(value);
+                if (DateTo < DateFrom)
+                {
+                    DateFrom = DateTo;
+                }
+            }
         }
 
         public MeetingWrapper(Meeting model) : base(model)
