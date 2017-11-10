@@ -196,7 +196,7 @@ namespace FriendOrganizer.UI.ViewModel
             
             if(await _friendReposetory.HasMeetingsAsync(Friend.Id))
             {
-                MessageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted bveacuse that perosn is part of atlest one meeting.");
+                await MessageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted bveacuse that perosn is part of atlest one meeting.");
                 return;
             }
             
