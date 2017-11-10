@@ -50,7 +50,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             EventAggregator = eventAggregator;
             MessageDialogService = messageDialogService;
-            SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+            SaveCommand = new DelegateCommand(() => OnSaveExecute(), OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
             CloseDetailViewCommand = new DelegateCommand(OnCloseDetailViewExecute);
         }

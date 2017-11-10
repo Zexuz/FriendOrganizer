@@ -29,6 +29,7 @@ namespace FriendOrganizer.UI.ViewModel
         }
 
         public ICommand CreateNewDetailCommand { get; }
+        public ICommand OpenSingleDetailViewCommnand { get; }
 
         private readonly IIndex<string, IDetailViewModel> _detailViewModelCreator;
         private readonly IEventAggregator _eventAggregator;
@@ -53,8 +54,18 @@ namespace FriendOrganizer.UI.ViewModel
             _eventAggregator.GetEvent<AfterDetailClosedEvent>().Subscribe(AfterDetailClosed);
 
             CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetialExecute);
+            OpenSingleDetailViewCommnand = new DelegateCommand<Type>(OpenSingleDetailViewExecute);
 
             NavigationViewModel = navigationViewModel;
+        }
+
+        private void OpenSingleDetailViewExecute(Type viewModelType)
+        {
+            OnOpenDetailView(new OpenDetialViewEventArgs
+            {
+                Id =  -1,
+                ViewModelName = viewModelType.Name
+            });
         }
 
         private void AfterDetailClosed(AfterDetailClosedEventArgs args)

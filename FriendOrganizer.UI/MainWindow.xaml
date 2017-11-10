@@ -16,6 +16,9 @@
         <DataTemplate DataType="{x:Type viewModel:MeetingDetailViewModel}">
             <view:MeetingDetailView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:ProgramminLangueageDetailViewModel}">
+            <view:ProgrammingLangueageDetailView />
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -33,6 +36,11 @@
                 <MenuItem Header="New Meeting" Command="{Binding CreateNewDetailCommand}"
                           CommandParameter="{x:Type viewModel:MeetingDetailViewModel}" />
             </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Programming Langueages"
+                          Command="{Binding OpenSingleDetailViewCommnand}"
+                          CommandParameter="{x:Type viewModel:ProgramminLangueageDetailViewModel}" />
+            </MenuItem>
         </Menu>
         <view:NaviagtionView Grid.Row="1" Grid.Column="0" DataContext="{Binding NavigationViewModel}" />
 
@@ -44,9 +52,9 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Title}" />
                         <TextBlock Text="*" Visibility="{Binding HasChanges, Converter={StaticResource booleanToVisibilityConverter}}" />
-                        <Button Command="{Binding CloseDetailViewCommand}" 
+                        <Button Command="{Binding CloseDetailViewCommand}"
                                 VerticalContentAlignment="Top" Margin="2"
-                                Content="X" FontSize="20"/>
+                                Content="X" FontSize="20" />
                     </StackPanel>
                 </DataTemplate>
             </TabControl.ItemTemplate>

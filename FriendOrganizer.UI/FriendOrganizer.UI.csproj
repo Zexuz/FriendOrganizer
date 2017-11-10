@@ -97,7 +97,9 @@
     <Compile Include="Data\Repositries\IFriendReposetory.cs" />
     <Compile Include="Data\Repositries\IGenericRepository.cs" />
     <Compile Include="Data\Repositries\IMeetingRepository.cs" />
+    <Compile Include="Data\Repositries\IProgrammingLangueageRepository.cs" />
     <Compile Include="Data\Repositries\MeetingRepository.cs" />
+    <Compile Include="Data\Repositries\ProgrammingLangueageRepository.cs" />
     <Compile Include="Event\AfterDetailDeletedEvent.cs" />
     <Compile Include="Event\AfterDetailSavedEvent.cs" />
     <Compile Include="Event\AfterDetailClosedEvent.cs" />
@@ -113,12 +115,14 @@
     <Compile Include="ViewModel\MeetingDetailViewModel.cs" />
     <Compile Include="ViewModel\NavigationItemViewModel.cs" />
     <Compile Include="ViewModel\NavigationViewModel.cs" />
+    <Compile Include="ViewModel\ProgramminLangueageDetailViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\FriendDetailView.xaml.cs" />
     <Compile Include="View\MeetingDetailView.xaml.cs" />
     <Compile Include="View\NaviagtionView.xaml.cs">
       <DependentUpon>NaviagtionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ProgrammingLangueageDetailView.xaml.cs" />
     <Compile Include="View\Servicies\IMessageDialogService.cs" />
     <Compile Include="View\Servicies\MessageDialogService.cs" />
     <Compile Include="Wrapper\FriendPhoneNumberWrapper.cs" />
@@ -126,6 +130,7 @@
     <Compile Include="Wrapper\MeetingWrapper.cs" />
     <Compile Include="Wrapper\ModelWrapper.cs" />
     <Compile Include="Wrapper\NotifyDataErrorInfoBase.cs" />
+    <Compile Include="Wrapper\ProgramminLanguageWrapper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,6 +149,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ProgrammingLangueageDetailView.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
