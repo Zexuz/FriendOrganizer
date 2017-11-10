@@ -169,6 +169,13 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected override async void OnDeleteExecute()
         {
+            
+            if(await _friendReposetory.HasMeetingsAsync(Friend.Id))
+            {
+                _messageDialogService.ShowInfoDialog($"{Friend.FirstName} {Friend.LastName} can't be deleted bveacuse that perosn is part of atlest one meeting.");
+                return;
+            }
+            
             var res = _messageDialogService.ShowOkCancelDialog($"Do you readly want to delete the friend {Friend.FirstName} {Friend.LastName}", "Question");
             if (res == MessageDialogResult.Ok)
             {
