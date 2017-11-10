@@ -22,6 +22,9 @@ namespace FriendOrganizer.Model
 
         public ICollection<Meeting> Meetings { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion{ get; set; }
+
         public int? FavoriteLanguageId { get; set; }
         public ProgramminLanguage FavoriteLangueage { get; set; }
         public ICollection<FriendPhoneNumber> PhoneNumbers { get; set; }
