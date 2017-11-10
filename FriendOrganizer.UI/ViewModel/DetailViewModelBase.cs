@@ -8,6 +8,19 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public abstract class DetailViewModelBase : ViewModelBase, IDetailViewModel
     {
+        protected readonly IEventAggregator EventAggregator;
+        private bool _hasChanges;
+        private int _id;
+
+        public ICommand SaveCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
+        
+        public int Id
+        {
+            get { return _id; }
+            protected set { _id = value; }
+        }
+
         public bool HasChanges
         {
             get { return _hasChanges; }
@@ -18,13 +31,7 @@ namespace FriendOrganizer.UI.ViewModel
                 ((DelegateCommand) SaveCommand).RaiseCanExecuteChanged();
             }
         }
-
-        protected readonly IEventAggregator EventAggregator;
-        private bool _hasChanges;
-
-        public ICommand SaveCommand { get; set; }
-        public ICommand DeleteCommand { get; set; }
-
+        
         public DetailViewModelBase(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;

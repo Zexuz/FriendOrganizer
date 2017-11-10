@@ -77,6 +77,7 @@ namespace FriendOrganizer.UI.ViewModel
                 ? await _friendReposetory.GetByIdAsync(friendId.Value)
                 : CreateNewFriend();
 
+            Id = friend.Id;
 
             InitializeFriend(friend);
             InitializeFriendPhoneNumbers(friend.PhoneNumbers);
@@ -156,6 +157,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             await _friendReposetory.SaveAsync();
             HasChanges = _friendReposetory.HasChanges();
+            Id = Friend.Id;
             RaiseDetailSavedEvent(Friend.Id,$"{Friend.FirstName} {Friend.LastName}");
         }
 
