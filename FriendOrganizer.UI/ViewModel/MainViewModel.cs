@@ -100,10 +100,12 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
+        private int nextNewItemId = 0;
         private void OnCreateNewDetialExecute(Type type)
         {
             OnOpenDetailView(new OpenDetialViewEventArgs
             {
+                Id =  nextNewItemId--,
                 ViewModelName = type.Name
             });
         }

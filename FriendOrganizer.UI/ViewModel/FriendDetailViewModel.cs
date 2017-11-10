@@ -69,13 +69,13 @@ namespace FriendOrganizer.UI.ViewModel
             PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
         }
 
-        public override async Task LoadAsync(int? friendId)
+        public override async Task LoadAsync(int friendId)
         {
-            var friend = friendId.HasValue
-                ? await _friendReposetory.GetByIdAsync(friendId.Value)
+            var friend = friendId > 0 
+                ? await _friendReposetory.GetByIdAsync(friendId)
                 : CreateNewFriend();
 
-            Id = friend.Id;
+            Id = friendId;
 
             InitializeFriend(friend);
             InitializeFriendPhoneNumbers(friend.PhoneNumbers);
