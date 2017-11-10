@@ -7,5 +7,6 @@ namespace FriendOrganizer.UI.Data.Repositries
     public interface IMeetingRepository:IGenericRepository<Meeting>
     {
         Task<List<Friend>> GetAllFriendsAsync();
+        Task ReloadFriendAsync(int argsId);
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data.Repositries;
+using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.View.Servicies;
 using FriendOrganizer.UI.Wrapper;
 using Prism.Commands;
@@ -64,11 +65,33 @@ namespace FriendOrganizer.UI.ViewModel
             base(eventAggregator,messageDialogService)
         {
             _meetingRepository = meetingRepository;
+            eventAggregator.GetEvent<AfterDetailSavedEvent>().Subscribe(AfterDetailSaved);
+            eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
 
             AddedFriends = new ObservableCollection<Friend>();
             AvalibleFriends = new ObservableCollection<Friend>();
             AddFriendCommand = new DelegateCommand(OnAddFriendExecure, OnAddFriendCanExecure);
             RemoveFriendCommand = new DelegateCommand(OnRemoveFriendExecure, OnRemoveFriendCanExecure);
+        }
+
+        private async void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
+        {
+            if(args.ViewModelName == nameof(FriendDetailViewModel))
+            {
+                _allFriends = await _meetingRepository.GetAllFriendsAsync();
+                SetupPicklist();
+            }
+        }
+
+        private async void AfterDetailSaved(AfterDetailSavedEventArgs args)
+        {
+            if(args.ViewModelName == nameof(FriendDetailViewModel))
+            {
+                await _meetingRepository.ReloadFriendAsync(args.Id);
+                _allFriends = await _meetingRepository.GetAllFriendsAsync();
+
+                SetupPicklist();
+            }
         }
 
         private void OnRemoveFriendExecure()

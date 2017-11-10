@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -24,6 +25,17 @@ namespace FriendOrganizer.UI.Data.Repositries
         public async Task<List<Friend>> GetAllFriendsAsync()
         {
             return await Context.Set<Friend>().ToListAsync();
+        }
+
+        public async Task ReloadFriendAsync(int friendId)
+        {
+            var dbEntityEntry = Context.ChangeTracker.Entries<Friend>()
+                .SingleOrDefault(db => db.Entity.Id == friendId);
+            
+            if(dbEntityEntry != null)
+            {
+                await dbEntityEntry.ReloadAsync();
+            }
         }
     }
 }
