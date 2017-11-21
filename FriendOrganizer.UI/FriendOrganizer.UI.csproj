@@ -49,6 +49,9 @@
     <Reference Include="MahApps.Metro, Version=1.6.0.184, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\MahApps.Metro.1.6.0-alpha0184\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=7.0.0.168, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59">
       <HintPath>..\packages\Prism.Core.7.0.0.168-pre\lib\netstandard1.0\Prism.dll</HintPath>
     </Reference>
@@ -101,6 +104,7 @@
     <Compile Include="Data\Lookups\LookupDataService.cs" />
     <Compile Include="Data\Lookups\IFriendLookupDataService.cs" />
     <Compile Include="Data\Lookups\IProgramminLanguageLookupDataService.cs" />
+    <Compile Include="Data\Lookups\LookupWeatherService.cs" />
     <Compile Include="Data\Repositries\FriendReposetory.cs" />
     <Compile Include="Data\Repositries\GenericRepository.cs" />
     <Compile Include="Data\Repositries\IFriendReposetory.cs" />

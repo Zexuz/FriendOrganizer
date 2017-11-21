@@ -28,6 +28,7 @@ namespace FriendOrganizer.UI.StartUp
             builder.RegisterType<ProgrammingLangueageDetailViewModel>().Keyed<IDetailViewModel>(nameof(ProgrammingLangueageDetailViewModel));
 
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
+            builder.RegisterType<LookupWeatherService>().As<ILookupWeatherService>();
             builder.RegisterType<FriendReposetory>().As<IFriendReposetory>();
             builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
             builder.RegisterType<ProgrammingLangueageRepository>().As<IProgrammingLangueageRepository>();

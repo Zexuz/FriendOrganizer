@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FriendOrganizer.Model;
+using FriendOrganizer.UI.Data.Lookups;
 using FriendOrganizer.UI.Data.Repositries;
 using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.View.Servicies;
@@ -17,16 +18,28 @@ namespace FriendOrganizer.UI.ViewModel
     public class MeetingDetailViewModel : DetailViewModelBase, IMeetingDetailViewModel
     {
         private readonly IMeetingRepository _meetingRepository;
+        private readonly ILookupWeatherService _weatherService;
         private MeetingWrapper _meeting;
         private Friend _selectedAvalibleFriend;
         private Friend _selectedAddedFriend;
         private List<Friend> _allFriends;
+        private string _weatherDescription;
 
         public ObservableCollection<Friend> AddedFriends { get; set; }
         public ObservableCollection<Friend> AvalibleFriends { get; set; }
 
         public ICommand AddFriendCommand { get; set; }
         public ICommand RemoveFriendCommand { get; set; }
+
+        public string WeatherDescription
+        {
+            get => $"On {_meeting.DateFrom:yyyy MMMM dd} the weather will be {_weatherDescription}";
+            set
+            {
+                _weatherDescription = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         public Friend SelectedAddedFriend
@@ -61,10 +74,12 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public MeetingDetailViewModel(IEventAggregator eventAggregator, IMeetingRepository meetingRepository, IMessageDialogService messageDialogService) :
+        public MeetingDetailViewModel(IEventAggregator eventAggregator, IMeetingRepository meetingRepository,
+            IMessageDialogService messageDialogService, ILookupWeatherService weatherService) :
             base(eventAggregator, messageDialogService)
         {
             _meetingRepository = meetingRepository;
+            _weatherService = weatherService;
             eventAggregator.GetEvent<AfterDetailSavedEvent>().Subscribe(AfterDetailSaved);
             eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
 
@@ -72,6 +87,15 @@ namespace FriendOrganizer.UI.ViewModel
             AvalibleFriends = new ObservableCollection<Friend>();
             AddFriendCommand = new DelegateCommand(OnAddFriendExecure, OnAddFriendCanExecure);
             RemoveFriendCommand = new DelegateCommand(OnRemoveFriendExecure, OnRemoveFriendCanExecure);
+            UpdateWeather(true);
+        }
+
+        private async void UpdateWeather(bool s)
+        {
+            if (s)
+                WeatherDescription = await _weatherService.LookupCurrentWeather();
+            else
+                WeatherDescription = await _weatherService.LookupWeatherForDate(_meeting.DateFrom);
         }
 
         private async void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
@@ -145,7 +169,8 @@ namespace FriendOrganizer.UI.ViewModel
         private void SetupPicklist()
         {
             var meetingFriendIds = Meeting.Model.Friends.Select(f => f.Id).ToList();
-            var addedFriends = _allFriends.Where(f => meetingFriendIds.Contains(f.Id)).OrderBy(f => f.FirstName).ToList();
+            var addedFriends = _allFriends.Where(f => meetingFriendIds.Contains(f.Id)).OrderBy(f => f.FirstName)
+                .ToList();
             var avalibleFriends = _allFriends.Except(addedFriends).OrderBy(f => f.FirstName);
 
             AddedFriends.Clear();
@@ -168,6 +193,10 @@ namespace FriendOrganizer.UI.ViewModel
                 if (!HasChanges)
                 {
                     HasChanges = _meetingRepository.HasChanges();
+                }
+                if (e.PropertyName == nameof(Meeting.DateFrom))
+                {
+                    UpdateWeather(false);
                 }
                 if (e.PropertyName == nameof(Meeting.HasErrors))
                 {
@@ -205,7 +234,8 @@ namespace FriendOrganizer.UI.ViewModel
         protected override async void OnDeleteExecute()
         {
             var result =
-                await MessageDialogService.ShowOkCancelDialog($"Do you really want to delete the meeting {Meeting.Title}",
+                await MessageDialogService.ShowOkCancelDialog(
+                    $"Do you really want to delete the meeting {Meeting.Title}",
                     "Question");
             if (result == MessageDialogResult.Ok)
             {

@@ -18,6 +18,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label Content="Title" Margin="10 10 10 0" />
@@ -62,8 +63,10 @@
                       SelectedItem="{Binding SelectedAvalibleFriend}" />
             
         </Grid>
+        
+        <Label Grid.Row="7" Content="{Binding WeatherDescription}" Margin="10 0" />
 
-        <StackPanel Grid.Row="7" Orientation="Horizontal">
+        <StackPanel Grid.Row="8" Orientation="Horizontal">
             <Button Content="Save" Width="75" Margin="10" Command="{Binding SaveCommand}" />
             <Button Content="Delete" Width="75" Margin="10" Command="{Binding DeleteCommand}" />
         </StackPanel>
